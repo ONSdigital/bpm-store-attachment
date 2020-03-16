@@ -1,0 +1,57 @@
+swagger: '2.0'
+info:
+  title: Store_Attachments
+  description: Store outgoing files in S3 with URL for Notify emails
+  version: 0.1.0
+host: $HOSTNAME 
+basePath: /default
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /bpm-pricor-attachment-dev:
+    post:
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: X-Api-Key
+          in: header
+          required: true
+          type: string
+          description: 'AWS API Key'
+        - name: attachInput
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/sendAttachmentInput'
+      responses:
+        '201':
+          description: 201 response
+          schema:
+            $ref: '#/definitions/attachResponse' 
+      security:
+         - auth: []
+securityDefinitions:
+  auth:
+    type: basic         
+definitions:
+  sendAttachmentInput:
+    type: object
+    title: sendAttachmentInput
+    properties:
+        filename:
+            type: string
+        fileContents:
+            type: string 
+  attachResponse:
+    type: object
+    title: notifyResponse
+    properties:
+        url:
+            type: string

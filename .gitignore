@@ -1,0 +1,5 @@
+function.zip
+v-env/
+.vscode/
+__pycache__/
+.terraform
