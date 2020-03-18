@@ -1,5 +1,5 @@
-resource "aws_api_gateway_rest_api" "attatchmentsApi" {
-  name        = "attatchmentsApi"
+resource "aws_api_gateway_rest_api" "attachmentsApi" {
+  name        = "${local.prefix}-attachmentsApi"
   description = "BPM to S3 Notify attachments API"
   api_key_source = "HEADER"
 }
@@ -9,14 +9,14 @@ resource "aws_api_gateway_api_key" "attachmentsKey" {
 }
 
  resource "aws_api_gateway_resource" "proxy" {
-   rest_api_id = aws_api_gateway_rest_api.attatchmentsApi.id
-   parent_id   = aws_api_gateway_rest_api.attatchmentsApi.root_resource_id
-   path_part   = "store"
+   rest_api_id = aws_api_gateway_rest_api.attachmentsApi.id
+   parent_id   = aws_api_gateway_rest_api.attachmentsApi.root_resource_id
+   path_part   = "files"
 
 }
 
 resource "aws_api_gateway_method" "proxy" {
-   rest_api_id   = aws_api_gateway_rest_api.attatchmentsApi.id
+   rest_api_id   = aws_api_gateway_rest_api.attachmentsApi.id
    resource_id   = aws_api_gateway_resource.proxy.id
    http_method   = "POST"
    authorization = "NONE"
@@ -24,7 +24,7 @@ resource "aws_api_gateway_method" "proxy" {
  }
 
  resource "aws_api_gateway_integration" "lambda" {
-   rest_api_id = aws_api_gateway_rest_api.attatchmentsApi.id
+   rest_api_id = aws_api_gateway_rest_api.attachmentsApi.id
    resource_id = aws_api_gateway_method.proxy.resource_id
    http_method = aws_api_gateway_method.proxy.http_method
 
@@ -38,15 +38,15 @@ resource "aws_api_gateway_method" "proxy" {
      aws_api_gateway_integration.lambda,
    ]
 
-   rest_api_id = aws_api_gateway_rest_api.attatchmentsApi.id
-   stage_name  = var.stage
+   rest_api_id = aws_api_gateway_rest_api.attachmentsApi.id
+   stage_name  = "store"
  }
 
  resource "aws_api_gateway_usage_plan" "attachmentUsagePlan" {
   name = "attachment_usage_plan"
 
   api_stages {
-    api_id = aws_api_gateway_rest_api.attatchmentsApi.id
+    api_id = aws_api_gateway_rest_api.attachmentsApi.id
     stage  = aws_api_gateway_deployment.attachmentDeployment.stage_name
   }
 }
@@ -65,7 +65,7 @@ resource "aws_api_gateway_usage_plan_key" "main" {
 
    # The "/*/*" portion grants access from any method on any resource
    # within the API Gateway REST API.
-   source_arn = "${aws_api_gateway_rest_api.attatchmentsApi.execution_arn}/*/*"
+   source_arn = "${aws_api_gateway_rest_api.attachmentsApi.execution_arn}/*/*"
  }
 
  output "attachmentStoreAPIKey" {
