@@ -5,7 +5,6 @@ variable "app" {
 
 variable "stage" {
     type = string
-    default = "dev"
 }
 
 variable "domain" {
