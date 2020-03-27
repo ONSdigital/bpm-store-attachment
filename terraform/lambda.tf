@@ -1,5 +1,5 @@
 resource "aws_iam_role" "attachment_lambda" {
-  name = "${local.prefix}-attachment-lambda"
+  name = "${local.prefix}-attachment"
 
   assume_role_policy = <<-EOF
     {
