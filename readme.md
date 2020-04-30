@@ -33,7 +33,16 @@ This lambda uses the Python 3.8 runtime.
 
 ### Trigger
 
-You will need to set your lambda's trigger to be API Gateway. You may add restrictions to that, for example to only allow POST requests, or only from certain IP ranges (e.g. your VPN), or to require an API key or other auth (highly recommended).
+You will need to set your lambda's trigger to be API Gateway. The included terraform scripts will create this for you. You may add restrictions to that, for example to only allow from certain IP ranges (e.g. your VPN) or tweak the authorisation from API key to something fancier, such as Cognito.
+
+You should POST JSON to the endpoint (again, using the terraform scripts will output both the endpoint address and a working API key) like the following example:
+
+```json
+{
+    "filename": "THE_ORIGINAL_FILENAME",
+    "fileContents": "BASE64 ENCODED FILE CONTENTS"
+}
+```
 
 ### Environment variables
 
