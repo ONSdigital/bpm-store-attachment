@@ -44,6 +44,24 @@ You should POST JSON to the endpoint (again, using the terraform scripts will ou
 }
 ```
 
+Sample `curl` invocation:
+
+```sh
+curl --request POST \
+  --url https://SOMETHING.execute-api.REGION.amazonaws.com/sandbox/files \
+  --header 'content-type: application/json' \
+  --header 'x-api-key: YOUR_API_KEY' \
+  --data '{"filename": "README.TXT", "fileContents":"SGVsbG8gZnJvbSB0aGUgT05TIQo="}'
+```
+
+Sample successful response (201 status code):
+
+```json
+{
+  "url": "https://s3.REGION.amazonaws.com/S3_BUCKET_NAME/ddaabc92-25cc-481a-810d-639868f0f21-6dc786bf-e8ad-43d8-9db3-d2446ffef8b9"
+}
+```
+
 ### Environment variables
 
 | Variable name     | Description |
