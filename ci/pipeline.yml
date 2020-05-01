@@ -1,0 +1,63 @@
+# COMMON ========================================
+
+aws_secret_access_key:
+  &aws_secret_access_key ((aws.service_account_access_key_secret))
+aws_access_key_id:
+  &aws_access_key_id ((aws.service_account_access_key_id))
+
+aws_params: &aws_params
+  AWS_ACCESS_KEY_ID: *aws_access_key_id
+  AWS_SECRET_ACCESS_KEY: *aws_secret_access_key
+  AWS_REGION: ((aws_region))
+  AWS_SERVICE_ROLE: ((aws.service_account_sor_deploy_role))
+  S3_NAME: ((environment)).bpm.((aws.tf_state_s3))
+  S3_KEY: statement-of-record/appsync.tfstate
+
+tf_params: &tf_params
+  <<: *aws_params
+  WORKSPACE: ((workspace))
+  TERRAFORM_SOURCE: generated/terraform
+
+github_pull_creds: &github_pull_creds
+  username: ((github.access_token))
+  password: x-oauth-basic
+
+# COMMON TASKS ==================================
+
+authenticate: &authenticate
+  task: authenticate 
+  file: bpm-ci-git/tasks/authenticate/task.yml
+  params:
+    <<: *aws_params
+
+# RESOURCES =====================================
+
+resources:
+  - name: bpm-mail-lambda
+    type: git
+    icon: github-circle
+    source:
+      uri: "https://github.com/ONSdigital/bpm-store-attachment"
+      branch: ci
+      <<: *github_pull_creds      
+
+  - name: bpm-ci-git
+    type: git
+    icon: github-circle
+    source:
+      uri: https://github.com/ONSdigital/bpm-ci.git
+      <<: *github_pull_creds      
+
+# JOBS ==========================================
+
+jobs:
+  - name: build
+    plan:
+      - in_parallel:
+        - get: bpm-store-attachment
+          trigger: true
+        - get: bpm-ci-git
+      - do:
+        - *authenticate
+        - task: generate
+          file: bpm-mail-lambda/ci/tasks/bpm-store-attachment.yml

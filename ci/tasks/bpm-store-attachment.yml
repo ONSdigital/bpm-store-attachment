@@ -1,0 +1,15 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: python
+    tag: 3.8-stretch
+
+inputs:
+  - name: bpm-store-attachment
+  - name: role
+
+run:
+  path: bpm-store-attachment/ci/tasks/bpm-store-attachment.sh
