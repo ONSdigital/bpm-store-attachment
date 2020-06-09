@@ -4,4 +4,4 @@ v-env/
 __pycache__/
 .terraform
 *.tfvars
-.tfstate
+*.tfstate
