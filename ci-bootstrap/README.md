@@ -6,7 +6,7 @@ Replace ENVIRONMENT variable ``` <accountname> ``` with sandbox, cicd, staging o
 
 
 Run in the terminal
-cd ci-bootstrap:
+cd ci-bootstrap
 
 ```
 
