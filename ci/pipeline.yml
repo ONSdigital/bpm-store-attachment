@@ -9,7 +9,7 @@ aws_params: &aws_params
   AWS_ACCESS_KEY_ID: *aws_access_key_id
   AWS_SECRET_ACCESS_KEY: *aws_secret_access_key
   AWS_REGION: ((aws_region))
-  AWS_SERVICE_ROLE: ((aws.service_account_sor_deploy_role))
+  AWS_SERVICE_ROLE: arn:aws:iam::((aws.account_((environment)))):role/bpm-svc-deploy-attachment-lambda
   S3_NAME: ((environment)).bpm.((aws.tf_state_s3))
   S3_KEY: store-attachment/lambda.tfstate
 

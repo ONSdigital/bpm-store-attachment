@@ -34,7 +34,7 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
   }
 }
 
-data "aws_iam_policy_document" "bpm-deploy-lambda-policy" {
+data "aws_iam_policy_document" "bpm-deploy-attachment-lambda-policy" {
   statement {
     sid = "InlineIAMLambdaS3Policy"
     effect = "Allow"
