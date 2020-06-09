@@ -1,5 +1,5 @@
 resource "aws_iam_role" "attachment_lambda" {
-  name = "${local.prefix}-attachment"
+  name = "${terraform.workspace}-attachment"
 
   assume_role_policy = <<-EOF
     {
@@ -28,10 +28,10 @@ resource "aws_iam_role_policy_attachment" "add_s3" {
 }
 
 resource "aws_lambda_function" "attachment" {
-    filename = "./function.zip"
+    filename = "../../generated/function.zip"
     runtime = "python3.8"
     role = aws_iam_role.attachment_lambda.arn
-    function_name = "${local.prefix}-file-store"
+    function_name = "${terraform.workspace}-file-store"
     handler = "lambda_function.lambda_handler"
     description = "BPM Prices Correspondence outgoing attachment store"
     timeout = 30

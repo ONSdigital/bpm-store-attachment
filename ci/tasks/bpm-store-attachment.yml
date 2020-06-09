@@ -11,5 +11,8 @@ inputs:
   - name: bpm-store-attachment
   - name: role
 
+outputs:
+  - name: generated
+  
 run:
   path: bpm-store-attachment/ci/tasks/bpm-store-attachment.sh

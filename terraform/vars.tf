@@ -1,10 +1,11 @@
 variable "app" {
     type = string
-    default = "bpm-emails"
+    default = "bpm-attachment"
 }
 
 variable "stage" {
     type = string
+    default = "dev"
 }
 
 variable "domain" {

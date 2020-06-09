@@ -4,13 +4,13 @@ provider "aws" {
 
 locals  {
     prefix = "${var.app}-${var.stage}"
-    attachments_bucket = "${local.prefix}-attachments-out.${var.domain}"
+    attachments_bucket = "${terraform.workspace}-attachments-out.${var.domain}"
 }
 
 terraform {
   backend "s3" {
     bucket               = "terraform.bpm.ons.digital"
-    key                  = "lambdas/attachment.tfstate"
+    key                  = "store-attachment/lambda.tfstate"
     region               = "eu-west-2"
     workspace_key_prefix = "workspaces"
   }

@@ -1,5 +1,5 @@
 resource "aws_api_gateway_rest_api" "attachmentsApi" {
-  name        = "${local.prefix}-attachmentsApi"
+  name        = "${terraform.workspace}-attachmentsApi"
   description = "BPM to S3 Notify attachments API"
   api_key_source = "HEADER"
 }

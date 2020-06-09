@@ -11,12 +11,12 @@ aws_params: &aws_params
   AWS_REGION: ((aws_region))
   AWS_SERVICE_ROLE: ((aws.service_account_sor_deploy_role))
   S3_NAME: ((environment)).bpm.((aws.tf_state_s3))
-  S3_KEY: statement-of-record/appsync.tfstate
+  S3_KEY: store-attachment/lambda.tfstate
 
 tf_params: &tf_params
   <<: *aws_params
   WORKSPACE: ((workspace))
-  TERRAFORM_SOURCE: generated/terraform
+  TERRAFORM_SOURCE: bpm-store-attachment/terraform
 
 github_pull_creds: &github_pull_creds
   username: ((github.access_token))
@@ -33,12 +33,12 @@ authenticate: &authenticate
 # RESOURCES =====================================
 
 resources:
-  - name: bpm-mail-lambda
+  - name: bpm-store-attachment
     type: git
     icon: github-circle
     source:
       uri: "https://github.com/ONSdigital/bpm-store-attachment"
-      branch: ci
+      branch: ((branch))
       <<: *github_pull_creds      
 
   - name: bpm-ci-git
@@ -60,4 +60,21 @@ jobs:
       - do:
         - *authenticate
         - task: generate
-          file: bpm-mail-lambda/ci/tasks/bpm-store-attachment.yml
+          file: bpm-store-attachment/ci/tasks/bpm-store-attachment.yml
+        - task: terraform-apply
+          file: bpm-store-attachment/ci/tasks/terraform_apply.yml
+          params:
+            <<: *tf_params
+  
+  - name: destroy
+    plan:
+      - in_parallel:
+        - get: bpm-store-attachment
+          passed: [build]
+        - get: bpm-ci-git
+      - do:
+        - *authenticate
+        - task: terraform-destroy
+          file: bpm-store-attachment/ci/tasks/terraform_destroy.yml
+          params:
+            <<: *tf_params
