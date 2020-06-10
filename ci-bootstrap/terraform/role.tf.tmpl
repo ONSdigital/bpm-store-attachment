@@ -6,6 +6,17 @@ provider "aws" {
 
 variable "environment" {}
 
+terraform {
+  backend "s3" {
+    # NB. The state bucket MUST already have been manually bootstrapped.
+    # See instructions in https://github.com/ONSdigital/bpm-ci/tree/master/bootstrap
+    # This only needs to be done once per environment set up
+    bucket = "{{environment}}.bpm.terraform.ons.digital"
+    key = "bootstrap/deploy/sor-role.tfstate"
+    region = "eu-west-2"
+  }
+}
+
 data "aws_caller_identity" "current" {}
 
 resource "aws_iam_role" "deploy-attachment-lambda" {
@@ -45,7 +56,6 @@ data "aws_iam_policy_document" "bpm-deploy-attachment-lambda-policy" {
                 "s3:PutObject",
                 "s3:PutBucketPolicy",
                 "s3:PutBucketNotification",
-                "s3:HeadBucket",
                 "s3:DeleteObject",
                 "s3:DeleteBucketPolicy",
                 "s3:DeleteBucket",
@@ -78,7 +88,11 @@ data "aws_iam_policy_document" "bpm-deploy-attachment-lambda-policy" {
                 "iam:DeletePolicy",
                 "iam:CreateRole",
                 "iam:CreatePolicy",
-                "iam:AttachRolePolicy"
+                "iam:AttachRolePolicy",
+                "apigateway:GET",
+                "apigateway:DELETE",
+                "apigateway:PATCH",
+                "apigateway:POST"
               ]
     resources = [
       "*"

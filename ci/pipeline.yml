@@ -37,7 +37,7 @@ resources:
     type: git
     icon: github-circle
     source:
-      uri: "https://github.com/ONSdigital/bpm-store-attachment"
+      uri: https://github.com/ONSdigital/bpm-store-attachment
       branch: ((branch))
       <<: *github_pull_creds      
 

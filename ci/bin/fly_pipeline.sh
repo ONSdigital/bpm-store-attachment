@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-: ${WORKSPACE:="bpm"}
+: ${WORKSPACE}
 : ${ENVIRONMENT:="sandbox"}
 : ${CONFIGURATION:="attachment"}
 : ${AWS_REGION:="eu-west-2"}

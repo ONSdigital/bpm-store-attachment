@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-: ${WORKSPACE:="bpm"}
+: ${WORKSPACE}
 : ${CONFIGURATION:="attachment"}
 : ${ENVIRONMENT:="sandbox"}
 : ${HTTP_PROXY:="localhost:8118"}

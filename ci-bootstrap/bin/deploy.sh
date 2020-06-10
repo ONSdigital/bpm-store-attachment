@@ -4,7 +4,7 @@ set -euo pipefail
 
 : ${ENVIRONMENT}
 
-pattern="^sandbox|cicd|staging|prod$"
+pattern="^sandbox|cicd|uat|staging|prod$"
 if [[ ! ${ENVIRONMENT} =~ $pattern ]]; then
     echo "Unknown environment target '${ENVIRONMENT}' - must match '${pattern}'"
     exit 1

@@ -2,13 +2,13 @@
 
 When setting up a new infrastructure for the lambda, first run deploy.sh script to create a correct role with correctly assigned policies.
 
-Replace ENVIRONMENT variable ``` <accountname> ``` with sandbox, cicd, staging or prod
+Replace ENVIRONMENT variable ` <accountname> ` with sandbox, cicd, staging or prod
 
 
 Run in the terminal
-cd ci-bootstrap
-
 ```
+
+cd ci-bootstrap
 
 ENVIRONMENT=<accountname> ./bin/deploy.sh
  
