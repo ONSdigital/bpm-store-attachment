@@ -5,8 +5,8 @@
 set -euo pipefail
 
 : ${WORKSPACE}
+: ${ENVIRONMENT}
 : ${CONFIGURATION:="attachment"}
-: ${ENVIRONMENT:="sandbox"}
 : ${HTTP_PROXY:="localhost:8118"}
 : ${TARGET:=gcp}
 : ${FLY:=fly -t ${TARGET}}

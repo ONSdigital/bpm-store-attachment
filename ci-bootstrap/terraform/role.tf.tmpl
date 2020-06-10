@@ -89,10 +89,7 @@ data "aws_iam_policy_document" "bpm-deploy-attachment-lambda-policy" {
                 "iam:CreateRole",
                 "iam:CreatePolicy",
                 "iam:AttachRolePolicy",
-                "apigateway:GET",
-                "apigateway:DELETE",
-                "apigateway:PATCH",
-                "apigateway:POST"
+                "apigateway:*"
               ]
     resources = [
       "*"
