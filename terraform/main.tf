@@ -2,9 +2,9 @@ provider "aws" {
   region = "eu-west-2"
 }
 
-locals  {
-    prefix = "${var.app}-${var.stage}"
-    attachments_bucket = "${local.prefix}-attachments-out.${var.domain}"
+locals {
+  prefix             = "${var.app}-${var.stage}"
+  attachments_bucket = "${local.prefix}-attachments-out.${var.domain}"
 }
 
 terraform {

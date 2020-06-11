@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "attachments" {
-    bucket = local.attachments_bucket
-    policy = <<-POLICY
+  bucket = local.attachments_bucket
+  policy = <<-POLICY
     {
         "Version":"2012-10-17",
         "Statement":[
@@ -17,10 +17,10 @@ POLICY
 }
 
 resource "aws_iam_policy" "attachment-lambda-s3-policy" {
-    name        = "${local.prefix}-attachment-s3-lambda"
-    description = "Least privilege permissions for outgoing attachments lambda"
+  name        = "${local.prefix}-attachment-s3-lambda"
+  description = "Least privilege permissions for outgoing attachments lambda"
 
-    policy = <<POLICY
+  policy = <<POLICY
 {
     "Version": "2012-10-17",
     "Statement": [

@@ -28,18 +28,17 @@ resource "aws_iam_role_policy_attachment" "add_s3" {
 }
 
 resource "aws_lambda_function" "attachment" {
-    filename = "./function.zip"
-    runtime = "python3.8"
-    role = aws_iam_role.attachment_lambda.arn
-    function_name = "${local.prefix}-file-store"
-    handler = "lambda_function.lambda_handler"
-    description = "BPM Prices Correspondence outgoing attachment store"
-    timeout = 30
+  filename      = "./function.zip"
+  runtime       = "python3.8"
+  role          = aws_iam_role.attachment_lambda.arn
+  function_name = "${local.prefix}-file-store"
+  handler       = "lambda_function.lambda_handler"
+  description   = "BPM Prices Correspondence outgoing attachment store"
+  timeout       = 30
 
-    environment {
-        variables = {
-            ATTACHMENT_BUCKET = local.attachments_bucket
-        }
+  environment {
+    variables = {
+      ATTACHMENT_BUCKET = local.attachments_bucket
     }
+  }
 }
-
