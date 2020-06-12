@@ -36,10 +36,9 @@ resource "aws_lambda_function" "attachment" {
     description = "BPM Prices Correspondence outgoing attachment store"
     timeout = 30
 
-    environment {
-        variables = {
-            ATTACHMENT_BUCKET = local.attachments_bucket
-        }
+  environment {
+    variables = {
+      ATTACHMENT_BUCKET = local.attachments_bucket
     }
+  }
 }
-

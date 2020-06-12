@@ -36,7 +36,7 @@ def lambda_handler(event, context):
         })
 
     if len(file_contents) == 0:
-        return msg( {
+        return msg({
             "statusCode": "400",
             "body": '{"error": "fileContents empty after base64 decode step"}',
         })
@@ -60,6 +60,7 @@ def lambda_handler(event, context):
         "statusCode": "201",
         "body": f'{{"url": "https://s3.{region}.amazonaws.com/{bucket}/{key}"}}',
     })
+
 
 def msg(error_obj):
     logger.info(error_obj)

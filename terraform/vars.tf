@@ -9,6 +9,6 @@ variable "stage" {
 }
 
 variable "domain" {
-    type = string
-    default= "bpm.ons.digital"
+  type    = string
+  default = "bpm.ons.digital"
 }
