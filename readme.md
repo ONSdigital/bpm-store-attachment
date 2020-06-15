@@ -8,13 +8,25 @@ After cloning the repo, you will need to create a virtualenv, as lambdas using a
 
 ```sh
 git clone https://github.com/ONSdigital/bpm-store-attachment.git
-cd bpm-store-attachment
+
+mkdir generated
+​
+pushd bpm-store-attachment
 python3 -m venv v-env
 source v-env/bin/activate
+pip install pipenv
 pipenv install
 deactivate
-cd v-env/lib/python3.7/site-packages
-zip -r9 $OLDPWD/function.zip .
+popd
+
+mkdir zipit
+​
+mv bpm-store-attachment/v-env/lib/python3.8/site-packages/* zipit/
+mv bpm-store-attachment/lambda_function.py zipit/
+​
+pushd zipit
+zip -r9 ../generated/function.zip .
+popd
 ```
 
 After editing the `lambda_function.py` file, you will need to add it to the zip file created earlier.

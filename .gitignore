@@ -3,3 +3,6 @@ v-env/
 .vscode/
 __pycache__/
 .terraform
+*.tfvars
+*.tfstate
+**/role.tf
