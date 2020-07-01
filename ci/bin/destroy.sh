@@ -6,14 +6,14 @@ set -euo pipefail
 
 : ${WORKSPACE}
 : ${ENVIRONMENT}
-: ${CONFIGURATION:="attachment"}
+: ${STAGE}}
 : ${HTTP_PROXY:="localhost:8118"}
 : ${TARGET:=gcp}
 : ${FLY:=fly -t ${TARGET}}
 
 export HTTP_PROXY=${HTTP_PROXY}
 
-pipeline="${ENVIRONMENT}-${WORKSPACE}-deploy-${CONFIGURATION}-lambda"
+pipeline="${ENVIRONMENT}-${WORKSPACE}-deploy-attachments-lambda"
 
 ${FLY} trigger-job -j ${pipeline}/destroy -w  || {
     echo "Concourse destroy job failed - resources may already be deleted"

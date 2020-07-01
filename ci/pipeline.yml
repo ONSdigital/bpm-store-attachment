@@ -1,9 +1,7 @@
 # COMMON ========================================
 
-aws_secret_access_key:
-  &aws_secret_access_key ((aws.service_account_access_key_secret))
-aws_access_key_id:
-  &aws_access_key_id ((aws.service_account_access_key_id))
+aws_secret_access_key: &aws_secret_access_key ((aws.service_account_access_key_secret))
+aws_access_key_id: &aws_access_key_id ((aws.service_account_access_key_id))
 
 aws_params: &aws_params
   AWS_ACCESS_KEY_ID: *aws_access_key_id
@@ -17,6 +15,7 @@ tf_params: &tf_params
   <<: *aws_params
   WORKSPACE: ((workspace))
   TERRAFORM_SOURCE: bpm-store-attachment/terraform
+  TF_VAR_stage: ((stage))
 
 github_pull_creds: &github_pull_creds
   username: ((github.access_token))
@@ -25,7 +24,7 @@ github_pull_creds: &github_pull_creds
 # COMMON TASKS ==================================
 
 authenticate: &authenticate
-  task: authenticate 
+  task: authenticate
   file: bpm-ci-git/tasks/authenticate/task.yml
   params:
     <<: *aws_params
@@ -39,14 +38,14 @@ resources:
     source:
       uri: https://github.com/ONSdigital/bpm-store-attachment
       branch: ((branch))
-      <<: *github_pull_creds      
+      <<: *github_pull_creds
 
   - name: bpm-ci-git
     type: git
     icon: github-circle
     source:
       uri: https://github.com/ONSdigital/bpm-ci.git
-      <<: *github_pull_creds      
+      <<: *github_pull_creds
 
 # JOBS ==========================================
 
@@ -54,27 +53,27 @@ jobs:
   - name: build
     plan:
       - in_parallel:
-        - get: bpm-store-attachment
-          trigger: true
-        - get: bpm-ci-git
+          - get: bpm-store-attachment
+            trigger: true
+          - get: bpm-ci-git
       - do:
-        - *authenticate
-        - task: generate
-          file: bpm-store-attachment/ci/tasks/bpm-store-attachment.yml
-        - task: terraform-apply
-          file: bpm-store-attachment/ci/tasks/terraform_apply.yml
-          params:
-            <<: *tf_params
-  
+          - *authenticate
+          - task: generate
+            file: bpm-store-attachment/ci/tasks/bpm-store-attachment.yml
+          - task: terraform-apply
+            file: bpm-store-attachment/ci/tasks/terraform_apply.yml
+            params:
+              <<: *tf_params
+
   - name: destroy
     plan:
       - in_parallel:
-        - get: bpm-store-attachment
-          passed: [build]
-        - get: bpm-ci-git
+          - get: bpm-store-attachment
+            passed: [build]
+          - get: bpm-ci-git
       - do:
-        - *authenticate
-        - task: terraform-destroy
-          file: bpm-store-attachment/ci/tasks/terraform_destroy.yml
-          params:
-            <<: *tf_params
+          - *authenticate
+          - task: terraform-destroy
+            file: bpm-store-attachment/ci/tasks/terraform_destroy.yml
+            params:
+              <<: *tf_params

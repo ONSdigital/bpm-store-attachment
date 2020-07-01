@@ -17,7 +17,7 @@ POLICY
 }
 
 resource "aws_iam_policy" "attachment-lambda-s3-policy" {
-  name        = "${terraform.workspace}-attachment-s3-lambda"
+  name        = "${terraform.workspace}-attachments-s3-lambda"
   description = "Least privilege permissions for outgoing attachments lambda"
 
   policy = <<POLICY

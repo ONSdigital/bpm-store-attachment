@@ -1,5 +1,5 @@
 resource "aws_iam_role" "attachment_lambda" {
-  name = "${terraform.workspace}-attachment"
+  name = "${terraform.workspace}-${var.stage}-attachments"
 
   assume_role_policy = <<-EOF
     {

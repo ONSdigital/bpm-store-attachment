@@ -6,6 +6,7 @@ set -euo pipefail
 
 : ${WORKSPACE}
 : ${TERRAFORM_SOURCE}
+: ${TF_VAR_stage}
 : ${AWS_REGION}
 : ${S3_NAME}
 : ${S3_KEY}
