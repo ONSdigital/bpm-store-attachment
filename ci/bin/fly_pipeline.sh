@@ -22,7 +22,7 @@ fi
 
 export HTTP_PROXY=${HTTP_PROXY}
 
-pipeline="${ENVIRONMENT}-${WORKSPACE}-deploy-${CONFIGURATION}-lambda"
+pipeline="${ENVIRONMENT}-${WORKSPACE}-deploy-attachments-lambda"
 
 ${FLY} set-pipeline \
     -p ${pipeline} \
