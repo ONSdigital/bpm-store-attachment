@@ -4,7 +4,7 @@ variable "app" {
 }
 
 variable "stage" {
-  type    = string
+  type = string
 }
 
 variable "domain" {
