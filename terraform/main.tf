@@ -1,3 +1,4 @@
 locals {
-  attachments_bucket = "${terraform.workspace}-attachments-out.${var.domain}"
+  prefix             = "${var.app}-${var.stage}"
+  attachments_bucket = "${terraform.workspace}-${var.app}-${var.stage}-out.${var.domain}"
 }
