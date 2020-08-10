@@ -19,7 +19,7 @@ sed "s/{{environment}}/${ENVIRONMENT}/;s/{{concourse_account}}/${CONCOURSE_ACCOU
 
 tfenv install
 terraform init
-terraform apply --auto-approve --var "environment=${ENVIRONMENT}" .
+terraform destroy --auto-approve --var "environment=${ENVIRONMENT}" .
 
 rm role.tf
 popd
