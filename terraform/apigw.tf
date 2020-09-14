@@ -83,10 +83,6 @@ output "attachmentStoreAPIKey" {
   value = aws_api_gateway_api_key.attachmentsKey.value
 }
 
-output "apiPath" {
-  value = aws_api_gateway_resource.proxy.path
-}
-
 output "attachmentStoreEndpoint" {
-  value = aws_api_gateway_deployment.attachmentDeployment.invoke_url
+  value = "${aws_api_gateway_deployment.attachmentDeployment.invoke_url}${aws_api_gateway_resource.proxy.path}"
 }
