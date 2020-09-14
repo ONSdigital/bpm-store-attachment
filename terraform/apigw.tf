@@ -23,6 +23,17 @@ resource "aws_api_gateway_method" "proxy" {
   api_key_required = true
 }
 
+resource "aws_api_gateway_method_settings" "settings" {
+  rest_api_id = aws_api_gateway_rest_api.attachmentsApi.id
+  stage_name  = aws_api_gateway_deployment.attachmentDeployment.stage_name
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = true
+    logging_level   = "INFO"
+  }
+}
+
 resource "aws_api_gateway_integration" "lambda" {
   rest_api_id = aws_api_gateway_rest_api.attachmentsApi.id
   resource_id = aws_api_gateway_method.proxy.resource_id
