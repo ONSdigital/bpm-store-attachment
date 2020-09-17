@@ -8,6 +8,7 @@ set -euo pipefail
 : $WORKSPACE
 : $ENVIRONMENT
 : $STAGE
+: $LOGGING_BUCKET
 : ${AWS_REGION:="eu-west-2"}
 : ${HTTP_PROXY:="localhost:8118"}
 : $BRANCH
@@ -31,6 +32,7 @@ ${FLY} set-pipeline \
     -v "aws_region=${AWS_REGION}" \
     -v "environment=${ENVIRONMENT}" \
     -v "branch=${BRANCH}" \
+    -v "logging_bucket=${LOGGING_BUCKET}" \
     -v "stage=${STAGE}" \
     ${EXTRA_OPTIONS}
 
