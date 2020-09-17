@@ -7,6 +7,10 @@ variable "stage" {
   type = string
 }
 
+variable "dns" {
+  type = string
+}
+
 variable "domain" {
   type    = string
   default = "bpm.ons.digital"
