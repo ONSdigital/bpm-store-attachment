@@ -6,13 +6,12 @@ set -euo pipefail
 
 : ${WORKSPACE:=`jq -r '.[] | select(.name == "head_name").value' ./bpm-store-attachment/.git/resource/metadata.json | sed 's/[^a-zA-Z0-9]/_/g'`}
 : ${TERRAFORM_SOURCE}
-: ${TF_VAR_dns:=`echo $WORKSPACE | sed 's/_/-/g'`}
 : ${TF_VAR_stage}
 : ${AWS_REGION}
 : ${S3_NAME}
 : ${S3_KEY}
 
-
+export TF_VAR_dns:=`echo $WORKSPACE | sed 's/_/-/g'`
 
 # Ensure the workspace doesn't have any invalid character
 if [[ ${WORKSPACE} =~ - ]]; then
