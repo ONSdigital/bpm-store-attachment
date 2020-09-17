@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "attachments" {
   bucket = local.attachments_bucket
   logging {
-    target_bucket = "ons-${terraform.workspace}-${var.stage}-s3-access"
+    target_bucket = var.logging_bucket
     target_prefix = local.attachments_bucket
   }
   policy = <<-POLICY

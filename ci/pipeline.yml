@@ -15,6 +15,7 @@ tf_params: &tf_params
   <<: *aws_params
   TERRAFORM_SOURCE: bpm-store-attachment/terraform
   TF_VAR_stage: ((stage))
+  TF_VAR_logging_bucket: ((logging_bucket))
 
 github_pull_creds: &github_pull_creds
   username: ((github.access_token))
