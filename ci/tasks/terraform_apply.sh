@@ -11,7 +11,7 @@ set -euo pipefail
 : ${S3_NAME}
 : ${S3_KEY}
 
-export TF_VAR_dns:=`echo $WORKSPACE | sed 's/_/-/g'`
+export TF_VAR_dns=`echo $WORKSPACE | sed 's/_/-/g'`
 
 # Ensure the workspace doesn't have any invalid character
 if [[ ${WORKSPACE} =~ - ]]; then
