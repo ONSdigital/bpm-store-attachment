@@ -13,7 +13,6 @@ aws_params: &aws_params
 
 tf_params: &tf_params
   <<: *aws_params
-  WORKSPACE: ((workspace))
   TERRAFORM_SOURCE: bpm-store-attachment/terraform
   TF_VAR_stage: ((stage))
 
