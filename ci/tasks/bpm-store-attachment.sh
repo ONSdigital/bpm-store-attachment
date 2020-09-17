@@ -1,6 +1,6 @@
 #!/bin/bash
 apt-get update
-apt-get -y install zip
+apt-get -y install zip jq
 
 mkdir generated
 ​
