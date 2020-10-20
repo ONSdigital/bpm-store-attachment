@@ -13,7 +13,7 @@ set -euo pipefail
 
 export HTTP_PROXY=${HTTP_PROXY}
 
-pipeline="${ENVIRONMENT}-${WORKSPACE}-deploy-attachments-lambda"
+pipeline="prices-store-attachments-${ENVIRONMENT}"
 
 ${FLY} trigger-job -j ${pipeline}/destroy -w  || {
     echo "Concourse destroy job failed - resources may already be deleted"

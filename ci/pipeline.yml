@@ -1,21 +1,21 @@
 # COMMON ========================================
 
-aws_secret_access_key: &aws_secret_access_key ((aws.service_account_access_key_secret))
-aws_access_key_id: &aws_access_key_id ((aws.service_account_access_key_id))
+aws_secret_access_key: &aws_secret_access_key ((prices.service_account_access_key_secret))
+aws_access_key_id: &aws_access_key_id ((prices.service_account_access_key_id))
 
 aws_params: &aws_params
   AWS_ACCESS_KEY_ID: *aws_access_key_id
   AWS_SECRET_ACCESS_KEY: *aws_secret_access_key
   AWS_REGION: ((aws_region))
-  AWS_SERVICE_ROLE: arn:aws:iam::((aws.account_((environment)))):role/bpm-svc-deploy-attachment-lambda
-  S3_NAME: ((environment)).bpm.((aws.tf_state_s3))
+  AWS_SERVICE_ROLE: arn:aws:iam::((prices.account_((environment)))):role/prices-svc-deploy-attachment-lambda
+  S3_NAME: ((environment)).((prices.tf_state_s3))
   S3_KEY: store-attachment/lambda.tfstate
 
 tf_params: &tf_params
   <<: *aws_params
-  WORKSPACE: ((workspace))
   TERRAFORM_SOURCE: bpm-store-attachment/terraform
   TF_VAR_stage: ((stage))
+  TF_VAR_logging_bucket: ((logging_bucket))
 
 github_pull_creds: &github_pull_creds
   username: ((github.access_token))
@@ -30,15 +30,19 @@ authenticate: &authenticate
     <<: *aws_params
 
 # RESOURCES =====================================
+resource_types:
+- name: pull-request
+  type: docker-image
+  source:
+    repository: teliaoss/github-pr-resource
 
 resources:
   - name: bpm-store-attachment
-    type: git
-    icon: github-circle
+    type: pull-request
+    check_every: 5m
     source:
-      uri: https://github.com/ONSdigital/bpm-store-attachment
-      branch: ((branch))
-      <<: *github_pull_creds
+      repository: ONSdigital/bpm-store-attachment
+      access_token: ((github.access_token))
 
   - name: bpm-ci-git
     type: git
