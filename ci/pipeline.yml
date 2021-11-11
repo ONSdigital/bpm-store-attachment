@@ -1,14 +1,14 @@
 # COMMON ========================================
 
-aws_secret_access_key: &aws_secret_access_key ((prices.service_account_access_key_secret))
-aws_access_key_id: &aws_access_key_id ((prices.service_account_access_key_id))
+aws_secret_access_key: &aws_secret_access_key ((aws-((app)).service_account_access_key_secret))
+aws_access_key_id: &aws_access_key_id ((aws-((app)).service_account_access_key_id))
 
 aws_params: &aws_params
   AWS_ACCESS_KEY_ID: *aws_access_key_id
   AWS_SECRET_ACCESS_KEY: *aws_secret_access_key
   AWS_REGION: ((aws_region))
-  AWS_SERVICE_ROLE: arn:aws:iam::((prices.account_((environment)))):role/prices-svc-deploy-attachment-lambda
-  S3_NAME: ((environment)).((prices.tf_state_s3))
+  AWS_SERVICE_ROLE: arn:aws:iam::((aws-((app)).account_((environment)))):role/((app))-svc-deploy-attachment-lambda
+  S3_NAME: ((environment)).((aws-((app)).tf_state_s3))
   S3_KEY: store-attachment/lambda.tfstate
 
 tf_params: &tf_params
@@ -16,7 +16,7 @@ tf_params: &tf_params
   WORKSPACE: ((workspace))
   TERRAFORM_SOURCE: bpm-store-attachment/terraform
   TF_VAR_stage: ((stage))
-  TF_VAR_logging_bucket: ((logging_bucket))
+  TF_VAR_logging_bucket: ((workspace))-attachments-((stage))-out.bpm.ons.digital
 
 github_pull_creds: &github_pull_creds
   username: ((github.access_token))

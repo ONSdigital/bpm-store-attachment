@@ -34,6 +34,7 @@ ${FLY} set-pipeline \
     -v "branch=${BRANCH}" \
     -v "logging_bucket=${LOGGING_BUCKET}" \
     -v "stage=${STAGE}" \
+    -v "app=${APP}" \
     ${EXTRA_OPTIONS}
 
 ${FLY} unpause-pipeline \
